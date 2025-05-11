@@ -14,7 +14,7 @@ public class IfElse extends Node {
 
     @Override
     public String toString() {
-        return String.format("IfElse(%s, %s, %s)", condition.toString(), trueCase.toString(), falseCase.toString());
+        return String.format("IfElse(%s, %s, %s)", condition.toString(), trueCase.toString(), String.valueOf(falseCase));
     }
 
     @Override

@@ -15,8 +15,8 @@ public class Main {
             a = 5
             if (a > 2) {
                 # print(a)
-            } else {
             }
+            del a
             
         """;
 
@@ -42,6 +42,7 @@ public class Main {
         debugPrint.exec(ctx);
 
         System.out.println("R:\n" + node.exec(ctx));
+        System.out.println(ctx.variables);
 
         /*ast.Node root = new ast.BinaryOp("+", new ast.Constant("1"), new ast.Constant("2"));
         System.out.println("R ---> " + root.toString());*/

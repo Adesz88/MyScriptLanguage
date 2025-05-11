@@ -38,12 +38,13 @@ start returns [ast.Node node]
 
 line returns [ast.Node node]
     : ID '=' arg=expr       { $node = new ast.MemoryAssign($ID.text, $arg.node); }
+    | DEL ID                { $node = new ast.MemoryDelete($ID.text); }
     | val=expr              { $node = $val.node; }
     | KW_FUNC fname=ID '(' arglist ')' 'returns' body=expr
                             { $node = new ast.Function($fname.text, $arglist.ids, $body.node);  }
 
     | KW_IF '(' cond=expr ')' trueCase=sequence (KW_ELSE falseCase=sequence)?
-                            { $node = new ast.IfElse($cond.node, $trueCase.nodeList, $falseCase.nodeList); }
+                            { $node = new ast.IfElse($cond.node, $trueCase.nodeList, $KW_ELSE != null ? $falseCase.nodeList : null); }
 
     | KW_WHILE '(' cond=expr ')' whileBody=sequence
                             { $node = new ast.While($cond.node, $whileBody.nodeList); }
@@ -90,7 +91,7 @@ mulop returns [ast.Node node]
     ;
 
 fct returns [ast.Node node]
-    : SZAM                                        { $node = new ast.Constant($SZAM.text); }
+    : NUM                                        { $node = new ast.Constant($NUM.text); }
     | '(' expr ')'                                { $node = $expr.node; }
     | 'abs' '(' arg1=expr ')'                     { $node = new ast.UnaryOp("abs", $arg1.node); }
     | OPMINMAX '(' fstop=expr                     { $node = $fstop.node; }
@@ -114,7 +115,7 @@ callargs returns [java.util.ArrayList<ast.Node> args]
 LF       : '\n' ;
 LE       : ';';
 WS       : [ \t\r]+ ->skip ;
-SZAM     : [0-9]+('.' [0-9]+)? ;
+NUM      : [0-9]+('.' [0-9]+)? ;
 OPADD    : '+' | '-' | '<' | '>' | '<=' | '>=' | '==' | '!=';
 OPMUL    : '*' | '/' ;
 OPPWR    : '^' ;
@@ -125,4 +126,5 @@ KW_IF    : 'if';
 KW_ELSE  : 'else';
 KW_WHILE : 'while';
 KW_FOR   : 'for';
+DEL      : 'del';
 ID       : [a-zA-Z_][a-zA-Z_0-9]*;

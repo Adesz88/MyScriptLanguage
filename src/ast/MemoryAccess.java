@@ -5,7 +5,7 @@ public class MemoryAccess extends Node{
     public String varName;
 
     public MemoryAccess(String name) {
-        super(NodeType.MEMEORY_ACCESS);
+        super(NodeType.MEMORY_ACCESS);
         varName = name;
     }
 
