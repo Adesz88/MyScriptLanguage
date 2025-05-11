@@ -1,7 +1,10 @@
+import ast.ExternalFunction;
 import ast.RuntimeContext;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+
+import java.util.ArrayList;
 
 public class Main {
 
@@ -9,25 +12,12 @@ public class Main {
         // Example input from string
         //print(a) ra nem jo
         String src = """
-            a = 2
-            if (a - 2) {
-                a = 8
-               
+            a = 5
+            if (a > 2) {
+                # print(a)
             } else {
-                a = 7
-                #print(a)
-            }
-            b = a + 4
-            b + 1
-            a = 1
-            while(a < 2) {
-                a = a + 1
             }
             
-            for (a = 1; a < 4; a) {
-                a = a + 1
-            }
-            print(2 + 3)
         """;
 
         CharStream inputStream = CharStreams.fromString(src);
@@ -42,6 +32,14 @@ public class Main {
 
         RuntimeContext ctx = new RuntimeContext();
         ctx.variables.put(RuntimeContext.MEMORY, -1111.0);
+        ast.ExternalFunction debugPrint = new ExternalFunction("print") {
+            @Override
+            public double call(RuntimeContext ctx, ArrayList<Double> argValues) {
+                System.out.printf("[PRINT] %s\n", argValues);
+                return 0;
+            }
+        };
+        debugPrint.exec(ctx);
 
         System.out.println("R:\n" + node.exec(ctx));
 

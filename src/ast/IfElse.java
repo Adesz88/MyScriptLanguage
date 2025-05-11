@@ -14,17 +14,16 @@ public class IfElse extends Node {
 
     @Override
     public String toString() {
-        return String.format("IfElse(%s, %s, %s)", condition, trueCase, falseCase);
+        return String.format("IfElse(%s, %s, %s)", condition.toString(), trueCase.toString(), falseCase.toString());
     }
 
     @Override
     public double exec(RuntimeContext ctx) {
         double conditionValue = condition.exec(ctx);
         if (conditionValue != 0.0) {
-            trueCase.exec(ctx);
+            return trueCase.exec(ctx);
         } else {
-            falseCase.exec(ctx);
+            return falseCase.exec(ctx);
         }
-        return 0;
     }
 }

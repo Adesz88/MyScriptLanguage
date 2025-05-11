@@ -27,3 +27,12 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+src/antlr-4.11.1-complete.jar
+src/Template.interp
+src/Template.tokens
+src/TemplateBaseListener.java
+src/TemplateLexer.interp
+src/TemplateLexer.java
+src/TemplateLexer.tokens
+src/TemplateListener.java
+src/TemplateParser.java
