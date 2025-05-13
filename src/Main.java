@@ -12,12 +12,16 @@ public class Main {
         // Example input from string
         //print(a) ra nem jo
         String src = """
-            a = 5
+            #a = 5 ^ min(2, 1) nem jo
+            #a = TIME
+            a = 2
             if (a > 2) {
-                # print(a)
+                #a = 5
             }
+            a = (a == 5) ? 10 : abs(-1)
+            print(2^3^4)
             del a
-            
+            scan(b, c, d)
         """;
 
         CharStream inputStream = CharStreams.fromString(src);

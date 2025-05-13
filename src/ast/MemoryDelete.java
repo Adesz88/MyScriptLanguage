@@ -10,7 +10,7 @@ public class MemoryDelete extends Node{
 
     @Override
     public String toString() {
-        return "";
+        return String.format("MemoryDelete(%s)", varName);
     }
 
     @Override

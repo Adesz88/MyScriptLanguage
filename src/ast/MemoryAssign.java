@@ -19,7 +19,6 @@ public class MemoryAssign extends Node{
     public double exec(RuntimeContext ctx) {
         double value = this.value.exec(ctx);
         ctx.variables.put(varName, value);
-        // MemoryAccess.MEMORY = value.exec();
         return value;
     }
 }

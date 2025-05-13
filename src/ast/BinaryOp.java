@@ -40,6 +40,14 @@ public class BinaryOp extends Node{
                 return (lhs < rhs) ? 1.0 : 0.0;
             case ">":
                 return (lhs > rhs) ? 1.0 : 0.0;
+            case "<=":
+                return (lhs <= rhs) ? 1.0 : 0.0;
+            case ">=":
+                return (lhs >= rhs) ? 1.0 : 0.0;
+            case "==":
+                return (lhs == rhs) ? 1.0 : 0.0;
+            case "!=":
+                return (lhs != rhs) ? 1.0 : 0.0;
             default:
                 return Double.NaN;
         }

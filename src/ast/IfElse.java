@@ -22,8 +22,10 @@ public class IfElse extends Node {
         double conditionValue = condition.exec(ctx);
         if (conditionValue != 0.0) {
             return trueCase.exec(ctx);
-        } else {
+        } else if (falseCase != null) {
             return falseCase.exec(ctx);
+        } else {
+            return Double.NaN;
         }
     }
 }

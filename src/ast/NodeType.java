@@ -12,5 +12,7 @@ public enum NodeType {
     FUNCTION,
     FUNCTION_CALL,
     IF_ELSE,
-    WHILE
+    WHILE,
+    TERNARY,
+    SCAN
 }

@@ -1,7 +1,7 @@
 grammar Template;
 
 // Lexer/Parser should be generated with (in the src/ dir)
-// $ java -jar ../antlr-4.11.1-complete.jar Template.g4
+// $ java -jar antlr-4.11.1-complete.jar Template.g4
 
 options {
     language = Java;
@@ -31,7 +31,7 @@ start returns [ast.Node node]
     : { ast.NodeList nodeList = new ast.NodeList(); }
      (
         (item=line { nodeList.add($item.node); } )? COMMENT? LF
-    )*
+     )*
      EOF
      { $node = nodeList; }
     ;
@@ -39,6 +39,7 @@ start returns [ast.Node node]
 line returns [ast.Node node]
     : ID '=' arg=expr       { $node = new ast.MemoryAssign($ID.text, $arg.node); }
     | DEL ID                { $node = new ast.MemoryDelete($ID.text); }
+    | KW_SCAN '(' arglist ')' { $node = new ast.Scan($arglist.ids); }
     | val=expr              { $node = $val.node; }
     | KW_FUNC fname=ID '(' arglist ')' 'returns' body=expr
                             { $node = new ast.Function($fname.text, $arglist.ids, $body.node);  }
@@ -76,6 +77,11 @@ arglist returns [java.util.ArrayList<String> ids]
     ;
 
 expr returns [ast.Node node]
+    : fstop=relationop { $node = $fstop.node; }
+      (OPRELATION nxtop=relationop { $node = new ast.BinaryOp($OPRELATION.text, $node, $nxtop.node); })*
+    ;
+
+relationop returns [ast.Node node]
     : fstop=addop { $node = $fstop.node; }
       (OPADD nxtop=addop { $node = new ast.BinaryOp($OPADD.text, $node, $nxtop.node); })*
     ;
@@ -99,6 +105,9 @@ fct returns [ast.Node node]
         ) *
         ')'
     | OPADD arg=fct                           { $node = new ast.UnaryOp($OPADD.text, $arg.node); }
+    | '('cond=expr')' '?' trueExpr=expr ':' falseExpr=expr
+                        { $node = new ast.Ternary($cond.node, $trueExpr.node, $falseExpr.node); }
+    | KW_TIME                                 { $node = new ast.MemoryAccess($KW_TIME.text); }
     | ID                                      { $node = new ast.MemoryAccess($ID.text); }
     | ID '(' callargs ')'                     { $node = new ast.FunctionCall($ID.text, $callargs.args); }
     ;
@@ -116,12 +125,15 @@ LF       : '\n' ;
 LE       : ';';
 WS       : [ \t\r]+ ->skip ;
 NUM      : [0-9]+('.' [0-9]+)? ;
-OPADD    : '+' | '-' | '<' | '>' | '<=' | '>=' | '==' | '!=';
+OPRELATION: '<' | '>' | '<=' | '>=' | '==' | '!=';
+OPADD    : '+' | '-';
 OPMUL    : '*' | '/' ;
 OPPWR    : '^' ;
 OPMINMAX : 'min' | 'max' ;
 COMMENT  : '#' (~[\n])* ;
+KW_TIME  : 'TIME';
 KW_FUNC  : 'func';
+KW_SCAN  : 'scan';
 KW_IF    : 'if';
 KW_ELSE  : 'else';
 KW_WHILE : 'while';

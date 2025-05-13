@@ -12,7 +12,7 @@ public class While extends Node{
 
     @Override
     public String toString() {
-        return String.format("While(%s, {%s})\n", condition, body);
+        return String.format("While(%s, {%s})\n", condition.toString(), body.toString());
     }
 
     @Override

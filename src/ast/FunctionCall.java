@@ -35,7 +35,6 @@ public class FunctionCall extends Node {
             argValues.add(arg.exec(ctx));
         }
 
-        double result = func.call(ctx, argValues);
-        return result;
+        return func.call(ctx, argValues);
     }
 }

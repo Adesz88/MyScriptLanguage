@@ -1,7 +1,8 @@
 package ast;
 
+import java.util.Date;
+
 public class MemoryAccess extends Node{
-    // public static double MEMORY = 0;
     public String varName;
 
     public MemoryAccess(String name) {
@@ -16,6 +17,9 @@ public class MemoryAccess extends Node{
 
     @Override
     public double exec(RuntimeContext ctx) {
+        if ("TIME".equals(varName)) {
+            return (double) System.currentTimeMillis() / 1000L;
+        }
         return ctx.getVariable(varName);
     }
 }
