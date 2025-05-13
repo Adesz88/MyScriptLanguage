@@ -31,7 +31,6 @@ public class Main {
                   
                 case 2:
                   print(2)
-                  #break
                   
                 default:
                   print(500)

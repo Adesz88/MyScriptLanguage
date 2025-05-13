@@ -61,18 +61,15 @@ line returns [ast.Node node]
 
 switchBody returns [java.util.List<ast.Case> cases]
     : { $cases = new java.util.ArrayList<>(); }
-      (LF* KW_CASE NUM':' sequence KW_BREAK?
+      (LF* KW_CASE NUM':' sequence br=break
         { ast.Node node = new ast.Constant($NUM.text);
-            System.out.println($KW_BREAK); //bug it matches on the first in the second case when there is no break there
-          boolean br = $KW_BREAK == null ? false : true;
-          ast.Case caseNode = new Case(false, node, $sequence.nodeList, br);
+          ast.Case caseNode = new Case(false, node, $sequence.nodeList, $br.value);
           $cases.add(caseNode);
         }
       )*
-      (LF* KW_DEFAULT':' sequence KW_BREAK?
+      (LF* KW_DEFAULT':' sequence br=break
         { ast.Node node = new ast.Constant("0");
-           boolean br = $KW_BREAK == null ? false : true;
-           ast.Case caseNode = new Case(true, node, $sequence.nodeList, br);
+           ast.Case caseNode = new Case(true, node, $sequence.nodeList, $br.value);
            $cases.add(caseNode);
         }
       )?
@@ -85,6 +82,10 @@ sequence returns [ast.NodeList nodeList]
       LF*
       (item=line { $nodeList.add($item.node); } )? COMMENT? LF+
     )*
+    ;
+
+break returns [boolean value]
+    : KW_BREAK? { $value = $KW_BREAK == null ? false : true;}
     ;
 
 arglist returns [java.util.ArrayList<String> ids]
