@@ -44,12 +44,14 @@ line returns [ast.Node node]
     | KW_FUNC fname=ID '(' arglist ')' 'returns' body=expr
                             { $node = new ast.Function($fname.text, $arglist.ids, $body.node);  }
 
-    | KW_IF '(' cond=expr ')' trueCase=sequence (KW_ELSE falseCase=sequence)?
+    | KW_IF '(' cond=expr ')' '{' trueCase=sequence '}' (KW_ELSE '{' falseCase=sequence '}')?
                             { $node = new ast.IfElse($cond.node, $trueCase.nodeList, $KW_ELSE != null ? $falseCase.nodeList : null); }
 
-    | KW_WHILE '(' cond=expr ')' whileBody=sequence
+    | KW_SWITCH '(' expr ')' '{' switchBody '}' { $node = new ast.Switch($expr.node, $switchBody.cases); }
+
+    | KW_WHILE '(' cond=expr ')' '{' whileBody=sequence '}'
                             { $node = new ast.While($cond.node, $whileBody.nodeList); }
-    | KW_FOR '(' ID '=' init=expr ';' cond=expr ';' postOp=expr ')' forBody=sequence
+    | KW_FOR '(' ID '=' init=expr ';' cond=expr ';' postOp=expr ')' '{' forBody=sequence '}'
                             { /* NOTE!: this is a bit of hack as the init, cond and postOp could be optional, and should allow almost anything
                                 This is only used as an example for a "syntax sugar"
                               */
@@ -57,15 +59,32 @@ line returns [ast.Node node]
                             }
     ;
 
+switchBody returns [java.util.List<ast.Case> cases]
+    : { $cases = new java.util.ArrayList<>(); }
+      (LF* KW_CASE NUM':' sequence KW_BREAK?
+        { ast.Node node = new ast.Constant($NUM.text);
+            System.out.println($KW_BREAK); //bug it matches on the first in the second case when there is no break there
+          boolean br = $KW_BREAK == null ? false : true;
+          ast.Case caseNode = new Case(false, node, $sequence.nodeList, br);
+          $cases.add(caseNode);
+        }
+      )*
+      (LF* KW_DEFAULT':' sequence KW_BREAK?
+        { ast.Node node = new ast.Constant("0");
+           boolean br = $KW_BREAK == null ? false : true;
+           ast.Case caseNode = new Case(true, node, $sequence.nodeList, br);
+           $cases.add(caseNode);
+        }
+      )?
+      LF*
+    ;
 
 sequence returns [ast.NodeList nodeList]
     : { $nodeList = new ast.NodeList(); }
-    '{'
-      (
-        LF*
-        (item=line { $nodeList.add($item.node); } )? COMMENT? LF+
-      )*
-    '}'
+    (
+      LF*
+      (item=line { $nodeList.add($item.node); } )? COMMENT? LF+
+    )*
     ;
 
 arglist returns [java.util.ArrayList<String> ids]
@@ -136,6 +155,10 @@ KW_FUNC  : 'func';
 KW_SCAN  : 'scan';
 KW_IF    : 'if';
 KW_ELSE  : 'else';
+KW_SWITCH: 'switch';
+KW_CASE  : 'case';
+KW_BREAK : 'break';
+KW_DEFAULT: 'default';
 KW_WHILE : 'while';
 KW_FOR   : 'for';
 DEL      : 'del';

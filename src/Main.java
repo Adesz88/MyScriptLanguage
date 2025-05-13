@@ -14,14 +14,29 @@ public class Main {
         String src = """
             #a = 5 ^ min(2, 1) nem jo
             #a = TIME
-            a = 2
-            if (a > 2) {
-                #a = 5
+            #scan(a)
+            a = 1
+            if (a == 2) {
+                print(200)
             }
             a = (a == 5) ? 10 : abs(-1)
-            print(2^3^4)
+            print(a)
             del a
-            scan(b, c, d)
+            
+            scan(a)
+            switch (a) {
+                case 1:
+                  print(1)
+                  break
+                  
+                case 2:
+                  print(2)
+                  #break
+                  
+                default:
+                  print(500)
+                  break
+            }
         """;
 
         CharStream inputStream = CharStreams.fromString(src);
