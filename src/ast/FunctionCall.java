@@ -18,15 +18,7 @@ public class FunctionCall extends Node {
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
-        /*if (name.equals("print")) {
-            System.out.println("PRINT CALL, args: ");
-            for (int i = 0; i < args.size(); i++) {
-                System.out.println(args.get(i));
-            }
-            System.out.printf("[PRINT] %s\n", args.get(0).exec(ctx));
-            return 0;
-        }*/
+    public double exec(RuntimeContext ctx) throws Exception {
 
         Function func = ctx.function.get(name);
 

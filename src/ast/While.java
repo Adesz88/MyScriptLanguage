@@ -16,7 +16,7 @@ public class While extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
+    public double exec(RuntimeContext ctx) throws Exception {
         while (condition.exec(ctx) != 0.0) {
             body.exec(ctx);
         }
@@ -27,7 +27,7 @@ public class While extends Node{
         NodeList whileBody = new NodeList();
         whileBody.add(body);
         whileBody.add(postOp);
-        While whileNode = new While(forCond, body);
+        While whileNode = new While(forCond, whileBody);
 
         NodeList finalNode = new NodeList();
         finalNode.add(new MemoryAssign(varName, initValue));

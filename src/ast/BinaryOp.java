@@ -18,7 +18,7 @@ public class BinaryOp extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
+    public double exec(RuntimeContext ctx) throws Exception {
         double lhs = this.lhs.exec(ctx);
         double rhs = this.rhs.exec(ctx);
         switch (op) {

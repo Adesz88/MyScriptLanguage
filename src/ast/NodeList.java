@@ -17,7 +17,7 @@ public class NodeList extends Node{
 
     @Override
     public String toString() {
-        String result = "NodeList";
+        String result = "NodeList: ";
         for (Node node: nodes) {
             result += node.toString();
             result += "\n";
@@ -27,7 +27,7 @@ public class NodeList extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
+    public double exec(RuntimeContext ctx) throws Exception {
         for (int i = 0; i < nodes.size(); i++) {
             Node line = nodes.get(i);
             double value = line.exec(ctx);

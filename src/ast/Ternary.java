@@ -19,7 +19,7 @@ public class Ternary extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
+    public double exec(RuntimeContext ctx) throws Exception {
         double conditionValue = condition.exec(ctx);
         if (conditionValue != 0.0) {
             return trueExpr.exec(ctx);

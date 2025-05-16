@@ -37,7 +37,9 @@ start returns [ast.Node node]
     ;
 
 line returns [ast.Node node]
-    : ID '=' arg=expr       { $node = new ast.MemoryAssign($ID.text, $arg.node); }
+    : KW_DOUBLE ID          { $node = new ast.MemoryDeclare($ID.text); }
+    | KW_DOUBLE ID '=' arg=expr { $node = new ast.MemoryDeclare($ID.text, $arg.node); }
+    | ID '=' arg=expr       { $node = new ast.MemoryAssign($ID.text, $arg.node); }
     | DEL ID                { $node = new ast.MemoryDelete($ID.text); }
     | KW_SCAN '(' arglist ')' { $node = new ast.Scan($arglist.ids); }
     | val=expr              { $node = $val.node; }
@@ -51,29 +53,28 @@ line returns [ast.Node node]
 
     | KW_WHILE '(' cond=expr ')' '{' whileBody=sequence '}'
                             { $node = new ast.While($cond.node, $whileBody.nodeList); }
-    | KW_FOR '(' ID '=' init=expr ';' cond=expr ';' postOp=expr ')' '{' forBody=sequence '}'
-                            { /* NOTE!: this is a bit of hack as the init, cond and postOp could be optional, and should allow almost anything
-                                This is only used as an example for a "syntax sugar"
-                              */
-                            $node = ast.While.buildFor($ID.text, $init.node, $cond.node, $postOp.node, $forBody.nodeList);
-                            }
+    | KW_FOR '(' ID '=' init=expr ';' cond=expr ';' postOp=line ')' '{' forBody=sequence '}'
+                            { $node = ast.While.buildFor($ID.text, $init.node, $cond.node, $postOp.node, $forBody.nodeList); }
     ;
 
 switchBody returns [java.util.List<ast.Case> cases]
     : { $cases = new java.util.ArrayList<>(); }
-      (LF* KW_CASE NUM':' sequence br=break
-        { ast.Node node = new ast.Constant($NUM.text);
-          ast.Case caseNode = new Case(false, node, $sequence.nodeList, $br.value);
-          $cases.add(caseNode);
-        }
-      )*
+      (beforeDefault=case { $cases.add($beforeDefault.caseNode); })*
+
       (LF* KW_DEFAULT':' sequence br=break
-        { ast.Node node = new ast.Constant("0");
+        {
+           ast.Node node = new ast.Constant("0");
            ast.Case caseNode = new Case(true, node, $sequence.nodeList, $br.value);
            $cases.add(caseNode);
         }
       )?
+
+      (afterDefault=case { $cases.add($afterDefault.caseNode); })*
       LF*
+    ;
+
+case returns [ast.Case caseNode]
+    : LF* KW_CASE expr':' sequence br=break { $caseNode = new Case(false, $expr.node, $sequence.nodeList, $br.value); }
     ;
 
 sequence returns [ast.NodeList nodeList]
@@ -151,6 +152,7 @@ OPMUL    : '*' | '/' ;
 OPPWR    : '^' ;
 OPMINMAX : 'min' | 'max' ;
 COMMENT  : '#' (~[\n])* ;
+KW_DOUBLE: 'double';
 KW_TIME  : 'TIME';
 KW_FUNC  : 'func';
 KW_SCAN  : 'scan';

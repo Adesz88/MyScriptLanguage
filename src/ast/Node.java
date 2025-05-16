@@ -9,5 +9,5 @@ public abstract class Node {
 
     public abstract String toString();
 
-    public abstract double exec(RuntimeContext ctx);
+    public abstract double exec(RuntimeContext ctx) throws Exception;
 }

@@ -16,9 +16,13 @@ public class MemoryAssign extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
-        double value = this.value.exec(ctx);
-        ctx.variables.put(varName, value);
-        return value;
+    public double exec(RuntimeContext ctx) throws Exception {
+        if (ctx.variables.containsKey(varName)) {
+            double value = this.value.exec(ctx);
+            ctx.variables.put(varName, value);
+            return value;
+        } else {
+            throw new Exception("Defining undeclared variable");
+        }
     }
 }

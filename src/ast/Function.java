@@ -25,7 +25,7 @@ public class Function extends Node{
         return Double.NaN;
     }
 
-    public double call(RuntimeContext ctx, ArrayList<Double> argValues) {
+    public double call(RuntimeContext ctx, ArrayList<Double> argValues) throws Exception {
         ctx.newFrame();
         for (int i = 0; i < params.size(); i++) {
             ctx.variables.put(params.get(i), argValues.get(i));

@@ -18,12 +18,22 @@ public class Switch extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
+    public double exec(RuntimeContext ctx) throws Exception {
         double expressionValue = expression.exec(ctx);
         boolean br = true;
+        boolean match = false;
+
         for (Case caseNode: cases) {
             double caseValue = caseNode.value.exec(ctx);
-            if (caseValue == expressionValue || caseNode.def || !br) {
+            if (!caseNode.def && caseValue == expressionValue) {
+                match = true;
+                break;
+            }
+        }
+
+        for (Case caseNode: cases) {
+            double caseValue = caseNode.value.exec(ctx);
+            if (!caseNode.def && caseValue == expressionValue || !match && caseNode.def || !br) {
                 br = caseNode.exec(ctx) == 1.0;
                 if (br) {
                     return Double.NaN;

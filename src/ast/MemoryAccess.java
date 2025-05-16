@@ -16,10 +16,14 @@ public class MemoryAccess extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
+    public double exec(RuntimeContext ctx) throws Exception{
         if ("TIME".equals(varName)) {
             return (double) System.currentTimeMillis() / 1000L;
         }
-        return ctx.getVariable(varName);
+        try {
+            return ctx.getVariable(varName);
+        } catch (Exception e) {
+            throw new Exception("Accessing undeclared variable");
+        }
     }
 }

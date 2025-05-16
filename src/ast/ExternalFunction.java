@@ -13,7 +13,7 @@ public abstract class ExternalFunction extends Function{
     }
 
     @Override
-    public double call(RuntimeContext ctx, ArrayList<Double> argValues) {
+    public double call(RuntimeContext ctx, ArrayList<Double> argValues) throws Exception {
         return super.call(ctx, argValues);
     }
 }

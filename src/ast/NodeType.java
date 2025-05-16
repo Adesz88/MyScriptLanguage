@@ -5,6 +5,7 @@ public enum NodeType {
     CONST,
     BINARYOP,
     UNARYOP,
+    MEMORY_DECLARE,
     MEMORY_ACCESS,
     MEMORY_ASSIGN,
     MEMORY_DELETE,

@@ -14,7 +14,7 @@ public class MemoryDelete extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
+    public double exec(RuntimeContext ctx) throws Exception {
         ctx.variables.remove(varName);
         return 0;
     }

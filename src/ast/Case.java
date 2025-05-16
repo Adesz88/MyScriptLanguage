@@ -20,7 +20,7 @@ public class Case extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
+    public double exec(RuntimeContext ctx) throws Exception {
         body.exec(ctx);
         return br ? 1.0 : 0.0;
     }

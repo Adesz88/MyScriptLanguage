@@ -16,7 +16,7 @@ public class UnaryOp extends Node{
     }
 
     @Override
-    public double exec(RuntimeContext ctx) {
+    public double exec(RuntimeContext ctx) throws Exception {
         double value = argument.exec(ctx);
         switch (op) {
             case "+":

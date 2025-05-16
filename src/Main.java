@@ -8,20 +8,20 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // Example input from string
-        //print(a) ra nem jo
         String src = """
+            double z = 6
+            print(1, 2, z)
             #a = 5 ^ min(2, 1) nem jo
             #a = TIME
             #scan(a)
-            a = 1
+            double a = 1
             if (a == 2) {
                 print(200)
             }
             a = (a == 5) ? 10 : abs(-1)
             print(a)
-            del a
             
             scan(a)
             switch (a) {
@@ -32,10 +32,18 @@ public class Main {
                 case 2:
                   print(2)
                   
+                  
                 default:
                   print(500)
+                  
+                case 3:
+                  print(3)
                   break
             }
+        """;
+
+        String input = """
+            double x;
         """;
 
         CharStream inputStream = CharStreams.fromString(src);
