@@ -31,7 +31,7 @@ public class NodeList extends Node{
         for (int i = 0; i < nodes.size(); i++) {
             Node line = nodes.get(i);
             double value = line.exec(ctx);
-            System.out.format("[DEBUG]: %d: %f\n", i, value);
+            //System.out.format("[DEBUG]: %d: %f\n", i, value);
         }
         return Double.NaN;
     }

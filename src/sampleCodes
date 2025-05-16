@@ -1,0 +1,74 @@
+### sample 1 ###
+double starttime
+double sum
+double x
+starttime = TIME
+sum = 0
+for (x = 0; x < 10; x = x + 1) {
+  sum = sum + x
+}
+print(sum)
+print(TIME - starttime)
+
+### sample 2 ###
+# Ez az input fuggvenyeben futhat helyesen
+# vagy okozhat futasi hibat
+double x
+scan(x)
+while(x>0) {
+    switch(x) {
+        case 1:
+            double y
+            scan(y)
+            break
+        case 2:
+            del y
+        case 3:
+            x = 5
+            break
+        default:
+            x = 10
+    }
+    scan(x)
+}
+print(x+y)
+
+### sample 3 ###
+double a
+double b
+scan(b)
+
+if (b >= a) {
+    print(a, b)
+} else {
+    print(abs(b))
+}
+
+double c
+scan(b, c)
+if (c != b) {
+    print(1)
+}
+
+scan(a)
+switch (a) {
+    case 1:
+      print(1)
+      break
+
+    case 2:
+      print(2)
+
+    default:
+      print(42)
+
+    case 3:
+      print(3)
+      break
+}
+
+function triple_pow(a, b) returns 3*a^b
+
+scan(c)
+b = (c < 0) ? min(-10, c) : triple_pow(c, 3)
+print(b)

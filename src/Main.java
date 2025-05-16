@@ -11,39 +11,12 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Example input from string
         String src = """
-            double z = 6
-            print(1, 2, z)
-            #a = 5 ^ min(2, 1) nem jo
-            #a = TIME
-            #scan(a)
-            double a = 1
-            if (a == 2) {
-                print(200)
-            }
-            a = (a == 5) ? 10 : abs(-1)
-            print(a)
+            double b
+            function triple_pow(a, b) returns 3*a^b
             
-            scan(a)
-            switch (a) {
-                case 1:
-                  print(1)
-                  break
-                  
-                case 2:
-                  print(2)
-                  
-                  
-                default:
-                  print(500)
-                  
-                case 3:
-                  print(3)
-                  break
-            }
-        """;
-
-        String input = """
-            double x;
+            scan(c)
+            b = (c < 0) ? min(-10, c) : triple_pow(c, 3)
+            print(b)
         """;
 
         CharStream inputStream = CharStreams.fromString(src);
@@ -57,7 +30,6 @@ public class Main {
         System.out.println("=" + node.toString());
 
         RuntimeContext ctx = new RuntimeContext();
-        ctx.variables.put(RuntimeContext.MEMORY, -1111.0);
         ast.ExternalFunction debugPrint = new ExternalFunction("print") {
             @Override
             public double call(RuntimeContext ctx, ArrayList<Double> argValues) {
@@ -68,9 +40,6 @@ public class Main {
         debugPrint.exec(ctx);
 
         System.out.println("R:\n" + node.exec(ctx));
-        System.out.println(ctx.variables);
-
-        /*ast.Node root = new ast.BinaryOp("+", new ast.Constant("1"), new ast.Constant("2"));
-        System.out.println("R ---> " + root.toString());*/
+        System.out.println("Variables: " + ctx.variables);
     }
 }

@@ -154,7 +154,7 @@ OPMINMAX : 'min' | 'max' ;
 COMMENT  : '#' (~[\n])* ;
 KW_DOUBLE: 'double';
 KW_TIME  : 'TIME';
-KW_FUNC  : 'func';
+KW_FUNC  : 'function';
 KW_SCAN  : 'scan';
 KW_IF    : 'if';
 KW_ELSE  : 'else';
