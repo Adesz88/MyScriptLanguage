@@ -27,7 +27,7 @@ public class Scan extends Node{
     public double exec(RuntimeContext ctx) {
         double number = 0.0;
         try {
-            System.out.println("Enter a number");
+            System.out.println("Please enter a number");
             Scanner in = new Scanner(System.in);
             number = in.nextDouble();
         } catch (InputMismatchException e) { }

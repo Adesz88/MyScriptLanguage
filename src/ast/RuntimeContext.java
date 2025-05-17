@@ -5,10 +5,7 @@ import java.util.Map;
 import java.util.Stack;
 
 public class RuntimeContext {
-    public final static String MEMORY = "M";
-
     public Map<String, Double> variables;
-    //public double memory = 0;
     public Map<String, Function> function;
     public Stack<Map<String, Double>> scope;
 

@@ -11,12 +11,22 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Example input from string
         String src = """
-            double b
-            function triple_pow(a, b) returns 3*a^b
+            scan(a)
+                switch (a) {
+                    case 1:
+                      print(1)
+                      break
             
-            scan(c)
-            b = (c < 0) ? min(-10, c) : triple_pow(c, 3)
-            print(b)
+                    case 5-3:
+                      print(2)
+            
+                    default:
+                      print(42)
+            
+                    case 3:
+                      print(3)
+                      break
+                }
         """;
 
         CharStream inputStream = CharStreams.fromString(src);

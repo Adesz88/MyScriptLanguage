@@ -108,7 +108,7 @@ relationop returns [ast.Node node]
     ;
 
 addop returns [ast.Node node ]
-    : fstop=mulop       { $node = $fstop.node; }
+    : fstop=mulop { $node = $fstop.node; }
       (OPMUL nxtop=mulop { $node = new ast.BinaryOp($OPMUL.text, $node, $nxtop.node); })*
     ;
 
@@ -118,16 +118,16 @@ mulop returns [ast.Node node]
     ;
 
 fct returns [ast.Node node]
-    : NUM                                        { $node = new ast.Constant($NUM.text); }
+    : NUM                                         { $node = new ast.Constant($NUM.text); }
     | '(' expr ')'                                { $node = $expr.node; }
     | 'abs' '(' arg1=expr ')'                     { $node = new ast.UnaryOp("abs", $arg1.node); }
     | OPMINMAX '(' fstop=expr                     { $node = $fstop.node; }
-        (',' nxtop=expr            { $node = new ast.BinaryOp($OPMINMAX.text, $node, $nxtop.node ); }
+        (',' nxtop=expr                           { $node = new ast.BinaryOp($OPMINMAX.text, $node, $nxtop.node ); }
         ) *
         ')'
     | OPADD arg=fct                           { $node = new ast.UnaryOp($OPADD.text, $arg.node); }
     | '('cond=expr')' '?' trueExpr=expr ':' falseExpr=expr
-                        { $node = new ast.Ternary($cond.node, $trueExpr.node, $falseExpr.node); }
+                                              { $node = new ast.Ternary($cond.node, $trueExpr.node, $falseExpr.node); }
     | KW_TIME                                 { $node = new ast.MemoryAccess($KW_TIME.text); }
     | ID                                      { $node = new ast.MemoryAccess($ID.text); }
     | ID '(' callargs ')'                     { $node = new ast.FunctionCall($ID.text, $callargs.args); }
@@ -135,7 +135,8 @@ fct returns [ast.Node node]
 
 callargs returns [java.util.ArrayList<ast.Node> args]
     :                                       { $args = new java.util.ArrayList<ast.Node>(); }
-    |   first=expr                          { $args = new java.util.ArrayList<ast.Node>();
+    |   first=expr                          {
+                                              $args = new java.util.ArrayList<ast.Node>();
                                               $args.add($first.node);
                                              }
         (',' more=expr                      { $args.add($more.node); }

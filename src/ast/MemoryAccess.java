@@ -1,7 +1,5 @@
 package ast;
 
-import java.util.Date;
-
 public class MemoryAccess extends Node{
     public String varName;
 
