@@ -24,7 +24,6 @@ public class While extends Node{
     }
 
     public static Node buildFor(boolean declare, String varName, Node initValue, Node forCond, Node postOp, NodeList body) {
-        System.out.println("declare: " + declare);
         NodeList whileBody = new NodeList();
         whileBody.add(body);
         whileBody.add(postOp);
@@ -36,6 +35,9 @@ public class While extends Node{
         }
         finalNode.add(new MemoryAssign(varName, initValue));
         finalNode.add(whileNode);
+        if (declare) {
+            finalNode.add(new MemoryDelete(varName));
+        }
 
         return finalNode;
     }

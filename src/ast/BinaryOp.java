@@ -32,9 +32,9 @@ public class BinaryOp extends Node{
                 return lhs / rhs;
             case "^":
                 return Math.pow(lhs, rhs);
-            case  "min":
+            case "min":
                 return Math.min(lhs, rhs);
-            case  "max":
+            case "max":
                 return Math.max(lhs, rhs);
             case "<":
                 return (lhs < rhs) ? 1.0 : 0.0;

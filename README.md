@@ -7,10 +7,10 @@
 - A kifejezés levelében lehet szám, lehet változónév és lehet TIME is, ami az aktuális idő (a UNIX idő, azaz az 1970 óta eltelt másodpercek száma).
 - Lehet benne változókat deklarálni double típusokkal. Nem deklarált változók használata vagy változó újradeklarálása esetén hiba keletkezik. Ha a változónak deklaráláskor nem adunk értéket, akkor alapértelmezetten 0-át kap.
 - A del utasítással lehet változót törölni.
-- Tartalmaz for és while ciklus C szerű szintaktikával.
+- Tartalmaz for és while ciklust C szerű szintaktikával.
 - Van benne if és switch-case-default utasítás.
-- A # szimbólummal lehetőség van komment beszúrására
-- Továbbá tartalmazza az órán megvalósított függvény definiálást, hívást és hatványozást
+- A # szimbólummal lehetőség van komment beszúrására.
+- Továbbá tartalmazza az órán megvalósított függvény definiálást, hívást és a hatványozást.
 
 ### Példa inputok:
 ```

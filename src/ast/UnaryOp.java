@@ -23,7 +23,7 @@ public class UnaryOp extends Node{
                 return value;
             case "-":
                 return -1 * value;
-            case  "abs":
+            case "abs":
                 return Math.abs(value);
             default:
                 return Double.NaN;
