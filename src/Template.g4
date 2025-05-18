@@ -11,20 +11,7 @@ options {
 import ast.*;
 }
 
-@parser::members {
-// Commented out, just for example
-/*
-    public static void main(String[] args) throws Exception {
-        // Example input from string
-        CharStream inputStream = CharStreams.fromString("+ 1 2");
-
-        TemplateLexer lex = new TemplateLexer(inputStream);
-        CommonTokenStream tokens = new CommonTokenStream (lex);
-        TemplateParser parser = new TemplateParser(tokens);
-        System.out.println("=" + parser.start().toStringTree(parser));
-    }
-*/
-}
+@parser::members { }
 
 
 start returns [ast.Node node]
