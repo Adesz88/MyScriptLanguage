@@ -53,8 +53,8 @@ line returns [ast.Node node]
 
     | KW_WHILE '(' cond=expr ')' '{' whileBody=sequence '}'
                             { $node = new ast.While($cond.node, $whileBody.nodeList); }
-    | KW_FOR '(' ID '=' init=expr ';' cond=expr ';' postOp=line ')' '{' forBody=sequence '}'
-                            { $node = ast.While.buildFor($ID.text, $init.node, $cond.node, $postOp.node, $forBody.nodeList); }
+    | KW_FOR '(' KW_DOUBLE? ID '=' init=expr ';' cond=expr ';' postOp=line ')' '{' forBody=sequence '}'
+                            { $node = ast.While.buildFor($KW_DOUBLE == null ? false : true, $ID.text, $init.node, $cond.node, $postOp.node, $forBody.nodeList); }
     ;
 
 switchBody returns [java.util.List<ast.Case> cases]

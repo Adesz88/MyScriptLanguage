@@ -11,22 +11,11 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Example input from string
         String src = """
-            scan(a)
-                switch (a) {
-                    case 1:
-                      print(1)
-                      break
-            
-                    case 5-3:
-                      print(2)
-            
-                    default:
-                      print(42)
-            
-                    case 3:
-                      print(3)
-                      break
-                }
+            double sum = 0
+            double x
+            for (x=0; x<10; x=x+1) {
+              sum = sum + x
+            }
         """;
 
         CharStream inputStream = CharStreams.fromString(src);

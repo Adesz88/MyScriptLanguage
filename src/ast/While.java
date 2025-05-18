@@ -23,13 +23,17 @@ public class While extends Node{
         return 0;
     }
 
-    public static Node buildFor(String varName, Node initValue, Node forCond, Node postOp, NodeList body) {
+    public static Node buildFor(boolean declare, String varName, Node initValue, Node forCond, Node postOp, NodeList body) {
+        System.out.println("declare: " + declare);
         NodeList whileBody = new NodeList();
         whileBody.add(body);
         whileBody.add(postOp);
         While whileNode = new While(forCond, whileBody);
 
         NodeList finalNode = new NodeList();
+        if (declare) {
+            finalNode.add(new MemoryDeclare(varName));
+        }
         finalNode.add(new MemoryAssign(varName, initValue));
         finalNode.add(whileNode);
 
